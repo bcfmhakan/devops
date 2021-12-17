@@ -19,7 +19,7 @@ deploy:
   svc:
     enabled: true
     name: golang
-  tag: 95
+  tag: 96
 hpa:
   autoscaling:
     enabled: false
