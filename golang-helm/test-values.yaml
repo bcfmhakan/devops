@@ -1,40 +1,39 @@
-deploy:
-  svc:
-    enabled: true
-    name: golang
-  name: golang
-  namespace: golang-test
-  replicas: 1
-  port: 3000
-  image: golang
-  tag: 58
-  registry: bcfmhakan/
-  resources:
-    enabled: false
-  requestCpu: 100m
-  requestMemory: 100Mi
-  limitCpu: 300m
-  limitMemory: 300Mi
-  imagePullSecrets: dockerhub
-  scrape: true
-   
-hpa:
-  autoscaling:
-    enabled: false
-    minReplicas: 2
-    maxReplicas: 3
-    targetCPUUtilizationPercentage: 70
-probe:
-  enabled: false
-  failureThreshold: 1
-  periodSeconds: 10
-  timeoutSeconds: 8
-  initialDelaySeconds: 15
-  pathreadiness: /
-  pathliveness: /
-ingress:
-  enabled: true
-  hosts: "golang-test.bestcloudfor.me"
 configmap:
   enabled: false
   name: golang
+deploy:
+  image: golang
+  imagePullSecrets: dockerhub
+  limitCpu: 300m
+  limitMemory: 300Mi
+  name: golang
+  namespace: golang-test
+  port: 3000
+  registry: bcfmhakan/
+  replicas: 1
+  requestCpu: 100m
+  requestMemory: 100Mi
+  resources:
+    enabled: false
+  scrape: true
+  svc:
+    enabled: true
+    name: golang
+  tag: 95
+hpa:
+  autoscaling:
+    enabled: false
+    maxReplicas: 3
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 70
+ingress:
+  enabled: true
+  hosts: golang-test.bestcloudfor.me
+probe:
+  enabled: false
+  failureThreshold: 1
+  initialDelaySeconds: 15
+  pathliveness: /
+  pathreadiness: /
+  periodSeconds: 10
+  timeoutSeconds: 8
