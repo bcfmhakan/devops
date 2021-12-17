@@ -2,8 +2,8 @@ import yaml
 import argparse
 
 parser = argparse.ArgumentParser()
-path = parser.add_argument("-path", "--path", help="YAML Path - String", type=str)
-tag = parser.add_argument("-tag", "--tag", help="Tag Value - Integer", type=int)
+path = parser.add_argument("-p", "--path", help="YAML Path - String", type=str)
+tag = parser.add_argument("-t", "--tag", help="Tag Value - Integer", type=int)
 args = parser.parse_args()
 
 with open(f"{args.path}", "r") as file:
