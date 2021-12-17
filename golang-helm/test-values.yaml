@@ -10,7 +10,7 @@ deploy:
   tag: 58
   registry: bcfmhakan/
   resources:
-    enabled: true
+    enabled: false
   requestCpu: 100m
   requestMemory: 100Mi
   limitCpu: 300m
