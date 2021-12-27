@@ -4,13 +4,13 @@ deploy:
   replicas: 1
   port: 80
   image: nopcommerce
-  tag: 0.0.3
-  imagePullSecrets: dockerhub
-  registry: 585226265632.dkr.ecr.eu-central-1.amazonaws.com/
+  tag: 1
+  imagePullSecrets: docker-registry
+  registry: bcfmhakan/
   resources:
     enabled: true
-    requestCpu: 800m
-    requestMemory: 1200Mi
+    requestCpu: 200m
+    requestMemory: 300Mi
     limitCpu: 1700m
     limitMemory: 20000Mi
 svc:
