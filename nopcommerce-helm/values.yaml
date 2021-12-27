@@ -5,6 +5,7 @@ deploy:
   port: 80
   image: nopcommerce
   tag: 0.0.3
+  imagePullSecrets: dockerhub
   registry: 585226265632.dkr.ecr.eu-central-1.amazonaws.com/
   resources:
     enabled: true
