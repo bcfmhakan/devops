@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deploy.name }}-deployment
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.deploy.name }}
+spec:
+  replicas: {{ .Values.deploy.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.deploy.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deploy.name }}
+    spec:
+{{- if .Values.deploy.nodeselector }}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: beta.kubernetes.io/instance-type
+                operator: {{ .Values.deploy.InOrNotIn }}
+                values:
+                - {{ .Values.deploy.nodeselectorvalue }}
+{{- end }}
+      containers:
+      - name: {{ .Values.deploy.name }}
+{{- if .Values.configmap.enabled }}
+        envFrom:
+        - configMapRef:
+            name: {{ .Values.configmap.name }}
+{{- end }}
+        image: {{ .Values.deploy.registry }}{{ .Values.deploy.image }}:{{ .Values.deploy.tag }}
+{{- if .Values.configmap.mounth.enabled }}
+        volumeMounts:
+        {{- range $.Values.configmap.mounth.files }}
+        - name: config-volume
+          mountPath: {{ $.Values.configmap.mounth.workdir }}{{ . }}
+          subPath: {{ . }}
+        {{- end }}
+{{- end }}
+        imagePullPolicy: Always
+{{- if .Values.deploy.resources.enabled }}
+        resources:
+          requests:
+            cpu: {{ .Values.deploy.resources.requestCpu }}
+            memory: {{ .Values.deploy.resources.requestMemory }}
+          limits:
+            cpu: {{ .Values.deploy.resources.limitCpu }}
+            memory: {{ .Values.deploy.resources.limitMemory }}
+{{- end }}
+{{- if .Values.probe.enabled }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.probe.pathreadiness }}
+            port: {{ .Values.probe.port }}  
+          initialDelaySeconds: {{ .Values.probe.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.probe.timeoutSeconds }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.probe.pathliveness }}
+            port: {{ .Values.probe.port }} 
+          failureThreshold: {{ .Values.probe.failureThreshold }}
+          periodSeconds: {{ .Values.probe.periodSeconds }}
+          initialDelaySeconds: {{ .Values.probe.initialDelaySeconds }}
+          timeoutSeconds: {{ .Values.probe.timeoutSeconds }}
+{{- end }}
+        ports:
+        - containerPort: {{ .Values.deploy.port }} 
+      restartPolicy: Always
+{{- if .Values.configmap.mounth.enabled }}
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ .Values.configmap.mounth.name }}
+{{- end }}

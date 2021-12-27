@@ -1,0 +1,15 @@
+{{- if .Values.svc.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.svc.name }}-service
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: {{ .Values.deploy.name }}
+  ports:
+    - port: {{ .Values.svc.port }}
+      targetPort: {{ .Values.deploy.port }}
+      protocol: TCP
+  type: NodePort
+{{- end }}
