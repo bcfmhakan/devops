@@ -5,7 +5,7 @@ deploy:
   port: 80
   image: nopcommerce
   tag: 1
-  imagePullSecrets: docker-registry
+  imagePullSecrets: regcred
   registry: bcfmhakan/
   resources:
     enabled: true
@@ -19,7 +19,7 @@ svc:
   port: 80
 hpa:
   autoscaling:
-    enabled: true
+    enabled: false
     minReplicas: 1
     maxReplicas: 7
     targetCPUUtilizationPercentage: 30
