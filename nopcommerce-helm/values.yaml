@@ -19,9 +19,9 @@ svc:
   port: 80
 hpa:
   autoscaling:
-    enabled: false
+    enabled: true
     minReplicas: 1
-    maxReplicas: 7
+    maxReplicas: 1
     targetCPUUtilizationPercentage: 30
     targetMemoryUtilizationPercentage: 30
 probe:
@@ -34,15 +34,15 @@ probe:
   pathliveness: /
   port: 80
 ingress:
-  enabled: true
+  enabled: false
   hosts: 
     - nopcommerce.bestcloudfor.me
 configmap:
-  enabled: false
-  name: configmap-name
+  enabled: true
+  name: nop-config
   mounth:
-    enabled: false
+    enabled: true
     name: mounth-name
     workdir: /app/
     files: 
-      - appsettings.Production.json
+      - appsettings.json
