@@ -38,10 +38,10 @@ ingress:
   hosts: 
     - nopcommerce.bestcloudfor.me
 configmap:
-  enabled: true
+  enabled: false
   name: nop-config
   mounth:
-    enabled: true
+    enabled: false
     name: nop-config
     workdir: /app/
     files: 
