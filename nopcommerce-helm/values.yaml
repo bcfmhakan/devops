@@ -42,7 +42,7 @@ configmap:
   name: nop-config
   mounth:
     enabled: true
-    name: mounth-name
+    name: nop-config
     workdir: /app/
     files: 
       - appsettings.json
