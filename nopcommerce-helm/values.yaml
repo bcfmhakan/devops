@@ -4,7 +4,7 @@ deploy:
   replicas: 1
   port: 80
   image: nopcommerce
-  tag: 5
+  tag: 6
   imagePullSecrets: regcred
   registry: bcfmhakan/
   resources:
